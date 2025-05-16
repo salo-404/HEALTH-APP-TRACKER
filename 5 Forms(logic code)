@@ -1,0 +1,411 @@
+// The logic code , not the interface .
+namespace WinFormsApp2
+{  // FIRST PAGE  OF THE APP
+    public partial class Form1 : Form
+    {
+
+        public enum GenderType
+        {
+            Male,
+            Female,
+            Other
+        }
+        public abstract class UserInfoBase
+        {
+            public string name { get; set; }
+            public int Age { get; set; }
+            public GenderType Gender { get; set; }
+            public abstract void DisplayInfo();
+        }
+
+        public class User : UserInfoBase
+        {
+            public override void DisplayInfo()
+            {
+                Console.WriteLine($"Name: {name}, Age: {Age}, Gender: {Gender}");
+            }
+        }
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+
+            int age;
+            int input = Convert.ToInt32(textBox2.Text);
+            if (input > 120)
+            {
+                MessageBox.Show("You should be dead!!");
+
+            }
+            else
+            {
+                Form3 nextForm = new Form3();
+
+                // Show Form2
+                nextForm.Show();
+
+                // Hide the current form (Form1)
+                this.Hide();
+
+                age = input;
+            }
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            string gender = comboBox1.Text;
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            string name = textBox1.Text;
+        }
+    
+}
+
+
+// Second Form Page : The main menu page 
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WinFormsApp2
+{
+    public partial class Form3 : Form
+    {
+        public Form3()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            wellness w = new wellness();
+            w.ShowDialog();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Vitals v = new Vitals();
+            v.ShowDialog();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            fitness f = new fitness();
+            f.ShowDialog();
+        }
+    }
+
+
+
+//Third Form : The fitness Page
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WinFormsApp2
+{
+
+    public partial class fitness : Form
+    {
+        public fitness()
+        {
+            InitializeComponent();
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void fitness_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+       
+            string feedback = "";
+
+            // Steps Evaluation
+            if (int.TryParse(textBox4.Text, out int steps))
+            {
+                if (steps < 2000)
+                    feedback += $"🦶 Steps: {steps} – Very low, walk more!\n";
+                else if (steps < 5000)
+                    feedback += $"🦶 Steps: {steps} – Not enough\n";
+                else if (steps < 8000)
+                    feedback += $"🦶 Steps: {steps} – Good\n";
+                else if (steps <= 12000)
+                    feedback += $"🦶 Steps: {steps} – Excellent!\n";
+                else
+                    feedback += $"🦶 Steps: {steps} – Overactive! Take care\n";
+            }
+            else
+            {
+                MessageBox.Show("Please enter a valid number for steps.");
+                return;
+            }
+
+            // Exercise Duration Evaluation
+            if (int.TryParse(textBox2.Text, out int exerciseMinutes))
+            {
+                if (exerciseMinutes < 10)
+                    feedback += $"🏋️ Exercise: {exerciseMinutes} mins – Too short\n";
+                else if (exerciseMinutes < 30)
+                    feedback += $"🏋️ Exercise: {exerciseMinutes} mins – Okay\n";
+                else if (exerciseMinutes <= 60)
+                    feedback += $"🏋️ Exercise: {exerciseMinutes} mins – Good\n";
+                else
+                    feedback += $"🏋️ Exercise: {exerciseMinutes} mins – Long session! Rest well\n";
+            }
+            else
+            {
+                MessageBox.Show("Please enter a valid number for exercise minutes.");
+                return;
+            }
+
+            // Calories Evaluation
+            if (int.TryParse(textBox3.Text, out int intake)){
+                int net = intake;
+
+                if (net < 1200)
+                    feedback += $"🔥 Net Calories: {net} – Too low, eat more\n";
+                else if (net < 2000)
+                    feedback += $"🔥 Net Calories: {net} – Balanced\n";
+                else if (net < 2500)
+                    feedback += $"🔥 Net Calories: {net} – Slightly high\n";
+                else
+                    feedback += $"🔥 Net Calories: {net} – High intake! Watch diet\n";
+            }
+            else
+            {
+                MessageBox.Show("Please enter valid numbers for calories.");
+                return;
+            }
+
+            // Final Output
+            MessageBox.Show(feedback, "Fitness Feedback");
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
+
+
+  // fourth form : vitals
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WinFormsApp2
+{
+   
+    public partial class Vitals : Form
+    {
+        public Vitals()
+        {
+            InitializeComponent();
+        }
+
+
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Vitals_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+    
+        {
+            string feedback = "";
+
+            // Blood Pressure Evaluation
+            if (int.TryParse(textBox1.Text, out int sys) &&
+                int.TryParse(textBox4.Text, out int dia))
+            {
+                if (sys < 90 || dia < 60)
+                    feedback += $"💉 Blood Pressure: {sys}/{dia} – Low BP\n";
+                else if (sys <= 120 && dia <= 80)
+                    feedback += $"💉 Blood Pressure: {sys}/{dia} – Normal BP\n";
+                else if (sys <= 140 || dia <= 90)
+                    feedback += $"💉 Blood Pressure: {sys}/{dia} – Elevated BP\n";
+                else
+                    feedback += $"💉 Blood Pressure: {sys}/{dia} – High BP\n";
+            }
+            else
+            {
+                MessageBox.Show("Enter valid blood pressure numbers.");
+                return;
+            }
+
+            // Glucose Evaluation
+            if (int.TryParse(textBox2.Text, out int glucose))
+            {
+                if (glucose < 70)
+                    feedback += $"🍬 Glucose: {glucose} mg/dL – Low\n";
+                else if (glucose <= 99)
+                    feedback += $"🍬 Glucose: {glucose} mg/dL – Normal\n";
+                else if (glucose <= 125)
+                    feedback += $"🍬 Glucose: {glucose} mg/dL – Prediabetic\n";
+                else
+                    feedback += $"🍬 Glucose: {glucose} mg/dL – Diabetic\n";
+            }
+            else
+            {
+                MessageBox.Show("Enter a valid glucose level.");
+                return;
+            }
+
+            // Pulse Evaluation
+            if (int.TryParse(textBox3.Text, out int pulse))
+            {
+                if (pulse < 60)
+                    feedback += $"💓 Pulse: {pulse} bpm – Low\n";
+                else if (pulse <= 100)
+                    feedback += $"💓 Pulse: {pulse} bpm – Normal\n";
+                else
+                    feedback += $"💓 Pulse: {pulse} bpm – High\n";
+            }
+            else
+            {
+                MessageBox.Show("Enter a valid pulse rate.");
+                return;
+            }
+
+            // Show the combined feedback
+            MessageBox.Show(feedback, "Vitals Feedback");
+        }
+
+    }
+}
+
+  // Fifth form: wellenss
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WinFormsApp2
+{
+
+    public partial class wellness : Form
+    {
+        public wellness()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            int waterInput = Convert.ToInt32(textBox1.Text);
+
+            // Get sleep input
+            int sleepInput = Convert.ToInt32(textBox2.Text);
+
+            // Generate a random meal suggestion (for now, simple logic)
+            string[] meals = {
+        "Grilled chicken with veggies",
+        "Oatmeal and banana",
+        "Tuna salad",
+        "Egg sandwich",
+        "Vegetable stir-fry"
+    };
+            Random rand = new Random();
+            string suggestedMeal = meals[rand.Next(meals.Length)];
+
+
+            // Optional: show a message to confirm inputs received
+            MessageBox.Show($"Water: {waterInput} liters\nSleep: {sleepInput} hours\nMeal: {suggestedMeal}", "Wellness Summary");
+
+          
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+
+        
+    }
+
+
+}
+
